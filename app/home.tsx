@@ -5,14 +5,8 @@ import { useState, useEffect } from 'react';
 // import fs from 'fs';
 
 const tools = [
-  { name: 'Shannon Entropy Alpha Simulator', path: '/tools/shannon-entropy' },
-  { name: 'Quant Tax-Hedge Arbitrage Simulator', path: '/tools/tax-hedge' },
-  { name: 'SaaS MRR Runway Calculator', path: '/tools/mrr-runway' },
-  { name: '2026 Self-Employment & 1099 Tax Calculator', path: '/tools/2026-self-employment-tax-calculator' },
   { name: 'Diablo 4 Season 8 DPS & Build Calculator', path: '/tools/diablo-4-season-8-dps-calculator' },
-
-
-  // Add more tools as needed
+  // Add more game tools as needed
 ];
 
 import articles from '@/content/articles_meta.json';
@@ -26,7 +20,7 @@ setBlogPosts(articles);
 
   return (
     <div style={{ backgroundColor: '#05050a', color: '#39ff14', fontFamily: 'monospace' }}>
-      <h1 style={{ color: '#ff0055' }}>KEUHZ TOOLBOX PORTAL</h1>
+      <h1 style={{ color: '#ff0055' }}>GAME TOOLS HUB - Hardcore Builds & Mechanics</h1>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
         {tools.map(tool => (
           <Link key={tool.path} href={tool.path} passHref>
