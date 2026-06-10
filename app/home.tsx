@@ -9,6 +9,8 @@ const tools = [
   { name: 'Quant Tax-Hedge Arbitrage Simulator', path: '/tools/tax-hedge' },
   { name: 'SaaS MRR Runway Calculator', path: '/tools/mrr-runway' },
   { name: '2026 Self-Employment & 1099 Tax Calculator', path: '/tools/2026-self-employment-tax-calculator' },
+  { name: 'Diablo 4 Season 8 DPS & Build Calculator', path: '/tools/diablo-4-season-8-dps-calculator' },
+
 
   // Add more tools as needed
 ];
