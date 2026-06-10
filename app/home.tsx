@@ -1,45 +1,50 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-// import fs from 'fs';
-
-const tools = [
-  { name: 'Diablo 4 Season 8 DPS & Build Calculator', path: '/tools/diablo-4-season-8-dps-calculator' },
-  // Add more game tools as needed
-];
-
-import articles from '@/content/articles_meta.json';
 
 export default function HomePage() {
-  const [blogPosts, setBlogPosts] = useState<{ title: string; path: string }[]>([]);
-
-  useEffect(() => {
-setBlogPosts(articles);
-  }, []);
-
   return (
     <div style={{ backgroundColor: '#05050a', color: '#39ff14', fontFamily: 'monospace' }}>
-      <h1 style={{ color: '#ff0055' }}>GAME TOOLS HUB - Hardcore Builds & Mechanics</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-        {tools.map(tool => (
-          <Link key={tool.path} href={tool.path} passHref>
-            <div style={{ padding: '1rem', border: '1px solid #39ff14', borderRadius: '4px' }}>
-              <h2>{tool.name}</h2>
-            </div>
-          </Link>
-        ))}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', padding: '2rem' }}>
+        <Link href="/blog/diablo-4-season-8-boss-guide-meta-builds" passHref>
+          <div className="guide-card" style={{ 
+            padding: '2rem', 
+            border: '2px solid #ff0055', 
+            borderRadius: '8px',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}>
+            <h2 style={{ color: '#ff0055', margin: '0 0 1rem 0' }}>Latest Meta Builds (Diablo 4 S8)</h2>
+            <p style={{ color: '#39ff14', margin: 0 }}>Discover the most effective builds for the current season</p>
+          </div>
+        </Link>
+        
+        <Link href="/blog" passHref>
+          <div className="guide-card" style={{ 
+            padding: '2rem', 
+            border: '2px solid #ff0055', 
+            borderRadius: '8px',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}>
+            <h2 style={{ color: '#ff0055', margin: '0 0 1rem 0' }}>Elden Ring Boss Guides</h2>
+            <p style={{ color: '#39ff14', margin: 0 }}>Conquer challenging bosses with our expert strategies</p>
+          </div>
+        </Link>
+        
+        <Link href="/blog" passHref>
+          <div className="guide-card" style={{ 
+            padding: '2rem', 
+            border: '2px solid #ff0055', 
+            borderRadius: '8px',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}>
+            <h2 style={{ color: '#ff0055', margin: '0 0 1rem 0' }}>PoE2 Collectibles</h2>
+            <p style={{ color: '#39ff14', margin: 0 }}>Find rare items and complete your collection</p>
+          </div>
+        </Link>
       </div>
-      <h2 style={{ color: '#ff0055' }}>Latest Deep Insights</h2>
-      <ul>
-        {blogPosts.map(post => (
-          <li key={post.path}>
-            <Link href={post.path} passHref>
-              <a style={{ color: '#39ff14' }}>{post.title}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
 
       <footer style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid #1a1a2e', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
@@ -54,7 +59,7 @@ setBlogPosts(articles);
           </Link>
         </div>
         <p style={{ color: '#333', fontSize: '0.75rem' }}>
-          © {new Date().getFullYear()} KEUHZ. All rights reserved. Tools are for educational purposes only.
+          © 2026 SPEH.CC - Pure Gaming Guides
         </p>
       </footer>
     </div>

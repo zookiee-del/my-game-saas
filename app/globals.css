@@ -1,4 +1,30 @@
-@tailwind base;
+@tailwind base;/* Global styles for the gaming guides portal */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  background-color: #05050a;
+  color: #39ff14;
+}
+
+.guide-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.guide-card:hover {
+  transform: scale(1.05);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Additional styling for links */
+a:visited {
+  color: #39ff14;
+}
 @tailwind components;
 @tailwind utilities;
 

@@ -135,84 +135,61 @@ async function llmChat(systemPrompt, userPrompt, jsonMode = false) {
 }
 
 async function planContent(trendsJson) {
-  log('Phase 2: Asking LLM to plan tool + article based on trends ...');
+  log('Phase 2: Asking LLM to plan articles based on trends ...');
 
-  const systemPrompt = `You are an elite product strategist and SEO expert for the gaming industry.
+  const systemPrompt = `You are an elite content strategist and SEO expert for the gaming industry.
 Given a set of Google search results about trending topics in gaming, Steam, MMORPGs, RPGs, and player tools,
-you must decide what gaming calculator/tool page and what SEO blog article to create RIGHT NOW to maximize organic traffic and player engagement.
-
-Focus on tools like:
-- DPS calculators
-- Character build optimizers
-- Boss攻略guides
-- Item comparison tools
-- Damage calculators
-- Skill tree planners
-- Equipment evaluators
+you must decide what 3 pure text/image SEO blog articles to create RIGHT NOW to maximize organic traffic and player engagement.
 
 Focus on articles about:
-- Popular game strategies
-- Character build guides
 - Boss攻略攻略
+- Game strategies and guides
+- Character build guides
 - Game mechanics explanations
 - Top builds for current meta
+- Complete collection guides
+- Advanced gameplay techniques
+
+The articles should be of these types:
+- Boss攻略攻略: Detailed strategies for defeating challenging bosses
+- Game strategies: Comprehensive guides for completing difficult content
+- Character builds: In-depth analysis of optimal character configurations
+- Collection guides: Complete walkthroughs for achieving 100% completion
 
 Return a JSON object with this exact schema:
 {
-  "tool": {
-    "slug": "url-safe-slug",
-    "name": "Human Readable Tool Name",
-    "description": "One-line description of what the calculator/tool does",
-    "keywords": ["keyword1", "keyword2"]
-  },
-  "article": {
-    "slug": "url-safe-article-slug",
-    "title": "SEO-Optimized Article Title",
-    "meta_description": "150-char meta description for SEO",
-    "target_keywords": ["kw1", "kw2", "kw3"],
-    "outline": ["H2 heading 1", "H2 heading 2", "H2 heading 3", "H2 heading 4"]
-  },
-  "rationale": "Brief explanation of why this combo will perform well"
+  "articles": [
+    {
+      "slug": "url-safe-slug",
+      "title": "SEO-Optimized Article Title",
+      "meta_description": "150-char meta description for SEO",
+      "target_keywords": ["kw1", "kw2", "kw3"],
+      "outline": ["H2 heading 1", "H2 heading 2", "H2 heading 3", "H2 heading 4"]
+    },
+    {
+      "slug": "url-safe-slug",
+      "title": "SEO-Optimized Article Title",
+      "meta_description": "150-char meta description for SEO",
+      "target_keywords": ["kw1", "kw2", "kw3"],
+      "outline": ["H2 heading 1", "H2 heading 2", "H2 heading 3", "H2 heading 4"]
+    },
+    {
+      "slug": "url-safe-slug",
+      "title": "SEO-Optimized Article Title",
+      "meta_description": "150-char meta description for SEO",
+      "target_keywords": ["kw1", "kw2", "kw3"],
+      "outline": ["H2 heading 1", "H2 heading 2", "H2 heading 3", "H2 heading 4"]
+    }
+  ],
+  "rationale": "Brief explanation of why these articles will perform well"
 }`;
 
-  const userPrompt = `Here are today's trending search results:\n\n${JSON.stringify(trendsJson, null, 2)}\n\nPlan one gaming calculator tool and one SEO article. Return ONLY valid JSON.`;
+  const userPrompt = `Here are today's trending search results:\n\n${JSON.stringify(trendsJson, null, 2)}\n\nAccording to search trends, autonomously plan and output 3 pure text/image long-tail SEO strategy articles of 2000+ words each (no tools, no calculators, only guides). Guide types include: Boss攻略攻略, dungeon/raid guides, character builds/build guides, and complete collection guides. Return ONLY valid JSON.`;
 
   const raw = await llmChat(systemPrompt, userPrompt, true);
   const plan = JSON.parse(raw);
-  log(`  ✓ Plan: tool="${plan.tool.name}", article="${plan.article.title}"`);
+  log(`  ✓ Plan: 3 articles planned`);
   return plan;
-}
-
-async function generateToolPage(plan) {
-  log('Phase 2a: Generating Next.js tool page code ...');
-
-  const systemPrompt = `You are a senior React/Next.js 15 engineer. Generate a COMPLETE, production-ready
-calculator tool page as a React Server Component (or "use client" if it needs interactivity).
-
-Requirements:
-- Next.js 15 App Router compatible, static export safe (no server-side fetch at runtime)
-- Fully self-contained in one file with inline Tailwind CSS classes
-- Must be a working calculator/interactive tool, not a placeholder
-- Include useState for state management if needed
-- Dark theme with professional styling
-- Mobile responsive
-- Include proper TypeScript types
-
-Return ONLY the raw TypeScript/TSX code. No markdown fences, no explanations.`;
-
-  const userPrompt = `Create a calculator tool page:
-- Name: ${plan.tool.name}
-- Description: ${plan.tool.description}
-- Keywords: ${plan.tool.keywords.join(', ')}
-- Slug: ${plan.tool.slug}
-
-Make it a fully functional, interactive calculator that provides real value to users.`;
-
-  const code = await llmChat(systemPrompt, userPrompt);
-  // Strip markdown fences if LLM wraps output
-  const clean = code.replace(/^```(?:tsx?|typescript)?\n?/m, '').replace(/\n?```\s*$/m, '').trim();
-  log(`  ✓ Tool page generated (${clean.length} chars)`);
-  return clean;
 }
 
 async function generateArticle(plan) {
@@ -233,28 +210,31 @@ Requirements:
 - Write in a professional yet accessible gaming community tone
 - DO NOT include any YAML frontmatter — just pure Markdown content`;
 
-  const outlineStr = plan.article.outline.map((h, i) => `${i + 1}. ${h}`).join('\n');
+  for (const article of plan.articles) {
+    const outlineStr = article.outline.map((h, i) => `${i + 1}. ${h}`).join('\n');
 
-  const userPrompt = `Write a comprehensive gaming SEO article:
-- Title: ${plan.article.title}
-- Meta description: ${plan.article.meta_description}
-- Target keywords: ${plan.article.target_keywords.join(', ')}
+    const userPrompt = `Write a comprehensive gaming SEO article:
+- Title: ${article.title}
+- Meta description: ${article.meta_description}
+- Target keywords: ${article.target_keywords.join(', ')}
 - Outline:
 ${outlineStr}
 
 Write the full article in Markdown. Minimum 2000 words. No frontmatter.`;
 
-  const article = await llmChat(systemPrompt, userPrompt);
-  const clean = article.replace(/^```(?:md|markdown)?\n?/m, '').replace(/\n?```\s*$/m, '').trim();
+    const articleContent = await llmChat(systemPrompt, userPrompt);
+    const clean = articleContent.replace(/^```(?:md|markdown)?\n?/m, '').replace(/\n?```\s*$/m, '').trim();
 
-  // Prepend H1 title if not already present
-  const finalContent = clean.startsWith('# ')
-    ? clean
-    : `# ${plan.article.title}\n\n${clean}`;
+    // Prepend H1 title if not already present
+    const finalContent = clean.startsWith('# ')
+      ? clean
+      : `# ${article.title}\n\n${clean}`;
 
-  log(`  ✓ Article generated (${finalContent.length} chars)`);
-  return finalContent;
-}
+    log(`  ✓ Article generated (${finalContent.length} chars)`);
+    writeArticle(article.slug, finalContent);
+    updateArticlesMeta(article.slug, article.title);
+   }
+ }
 
 // ─── 3. File System Writers ─────────────────────────────────────────────────
 function ensureDir(dirPath) {
@@ -336,7 +316,7 @@ function updateArticlesMeta(articleSlug, articleTitle) {
   }
 
   meta.push({
-    title: articleSlug,
+    title: articleTitle,
     path: blogPath,
   });
 
@@ -346,13 +326,13 @@ function updateArticlesMeta(articleSlug, articleTitle) {
 }
 
 // ─── 6. Git Auto-Publish ────────────────────────────────────────────────────
-function gitAutoPublish(toolName, articleTitle) {
+function gitAutoPublish(articlesCount, rationale) {
   log('Phase 4: Git auto-publish ...');
   try {
     execSync('git add .', { cwd: __dirname, stdio: 'pipe' });
     log('  ✓ git add .');
 
-    const msg = `auto: add ${toolName} tool + ${articleTitle} article`;
+    const msg = `auto: add ${articlesCount} articles as planned - ${rationale.substring(0, 50)}...`;
     // Truncate commit message to 72 chars for convention
     const shortMsg = msg.length > 72 ? msg.slice(0, 69) + '...' : msg;
 
@@ -393,25 +373,12 @@ async function main() {
 
     // Phase 2: Plan & Generate
     const plan = await planContent(trends);
-    const [toolCode, articleMd] = await Promise.all([
-      generateToolPage(plan),
-      generateArticle(plan),
-    ]);
-
-    // Phase 3: Write files & update indexes
-    writeToolPage(plan.tool.slug, toolCode);
-    writeArticle(plan.article.slug, articleMd);
-    updateHomePage(plan.tool.name, plan.tool.slug);
-    updateArticlesMeta(plan.article.slug, plan.article.title);
-
-    // Phase 4: Git publish
-    gitAutoPublish(plan.tool.name, plan.article.title);
+    await generateArticle(plan); // Generate all 3 articles
 
     const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
     log('═══════════════════════════════════════════════════════════');
     log(`  PIPELINE COMPLETE in ${elapsed}s`);
-    log(`  Tool:    ${plan.tool.name} → /tools/${plan.tool.slug}`);
-    log(`  Article: ${plan.article.title} → /blog/${plan.article.slug}`);
+    log(`  Generated: 3 articles as planned`);
     log(`  Rationale: ${plan.rationale}`);
     log('═══════════════════════════════════════════════════════════');
   } catch (err) {
