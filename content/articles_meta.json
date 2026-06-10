@@ -1,14 +1,50 @@
 [
   {
+    "slug": "diablo-4-season-8-boss-guide-meta-builds",
+    "title": "Diablo 4 Season 8 Boss Guide: Top Meta Builds & DPS Strategies",
+    "category": "meta-builds",
+    "date": "2026-06-10"
+  },
+  {
+    "slug": "diablo-4-season-8-boss-guide-echo-lilith-world-bosses",
+    "title": "Diablo 4 Season 8: Echo of Lilith World Boss Mechanics Guide",
+    "category": "boss-guides",
+    "date": "2026-06-10"
+  },
+  {
+    "slug": "diablo-4-season-8-world-boss-endgame-strategy",
     "title": "Diablo 4 Season 8: Ultimate World Boss & Endgame Dungeon Strategy Guide",
-    "path": "/blog/diablo-4-season-8-world-boss-endgame-strategy"
+    "category": "boss-guides",
+    "date": "2026-06-10"
   },
   {
+    "slug": "lost-ark-current-season-meta-dps-builds",
     "title": "Lost Ark Current Season: Top Meta DPS Builds, Gear Progression, and Rotation Guide",
-    "path": "/blog/lost-ark-current-season-meta-dps-builds"
+    "category": "meta-builds",
+    "date": "2026-06-10"
   },
   {
+    "slug": "subnautica-2-100-percent-collection-survival-guide",
     "title": "Subnautica 2: 100% Resource Collection, Base Building, and Deep Sea Survival Guide",
-    "path": "/blog/subnautica-2-100-percent-collection-survival-guide"
+    "category": "collectibles",
+    "date": "2026-06-10"
+  },
+  {
+    "slug": "mmorpg-dps-mechanics-why-crit-damage-outscales-base-attack-power",
+    "title": "MMORPG DPS Mechanics: Why Crit Damage Outscaling Base Attack Power",
+    "category": "meta-builds",
+    "date": "2026-06-10"
+  },
+  {
+    "slug": "osrs-tztok-jad-tzkal-zuk-ultimate-survival-guide",
+    "title": "OSRS TzTok-Jad & TzKal-Zuk: Ultimate Survival Guide",
+    "category": "boss-guides",
+    "date": "2026-06-10"
+  },
+  {
+    "slug": "expedition-33-ultimate-character-build-guide-best-setups",
+    "title": "Expedition 33: Ultimate Character Build Guide & Best Setups",
+    "category": "meta-builds",
+    "date": "2026-06-10"
   }
 ]

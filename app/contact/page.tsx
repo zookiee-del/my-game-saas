@@ -33,8 +33,8 @@ export default function ContactPage() {
             <span style={{ fontSize: "1.3rem" }}>✉</span>
             <div>
               <p style={{ color: "#666", fontSize: "0.8rem", margin: 0 }}>Email Us Directly</p>
-              <a href="mailto:admin@keuhz.com" style={{ color: "#00ffaa", fontSize: "1.1rem", textDecoration: "none" }}>
-                admin@keuhz.com
+              <a href="mailto:admin@speh.cc" style={{ color: "#00ffaa", fontSize: "1.1rem", textDecoration: "none" }}>
+                admin@speh.cc
               </a>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function ContactPage() {
             </p>
             <p style={{ color: "#666", fontSize: "0.85rem" }}>
               You can also email us directly at{" "}
-              <a href="mailto:admin@keuhz.com" style={{ color: "#00ffaa" }}>admin@keuhz.com</a>
+              <a href="mailto:admin@speh.cc" style={{ color: "#00ffaa" }}>admin@speh.cc</a>
             </p>
           </div>
         )}
@@ -195,7 +195,7 @@ export default function ContactPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem", fontSize: "0.9rem" }}>
             <div>
               <p style={{ color: "#00ffaa", margin: "0 0 0.2rem" }}>Are the calculators free to use?</p>
-              <p style={{ color: "#888", margin: 0 }}>Yes. All tools and calculators on KEUHZ are completely free for personal and commercial use.</p>
+              <p style={{ color: "#888", margin: 0 }}>Yes. All tools and calculators on speh.cc are completely free for personal and commercial use.</p>
             </div>
             <div>
               <p style={{ color: "#00ffaa", margin: "0 0 0.2rem" }}>Can I request a new tool or feature?</p>
