@@ -40,21 +40,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
   }
 })();
 
-// ─── Environment Config ─────────────────────────────────────────────────────
-const SERPER_API_KEY  = process.env.SERPER_API_KEY  || '';
-const LLM_API_KEY     = process.env.LLM_API_KEY     || '';
-const LLM_BASE_URL    = process.env.LLM_BASE_URL    || 'https://api.openai.com/v1';
-const LLM_MODEL       = process.env.LLM_MODEL       || 'gpt-4o';
+// ─── Environment Config (Cloud-Native process.env) ──────────────────────────
+// 优先读取系统环境变量（云端机制），如果没有，再尝试读取常规地方
+const serperKey = process.env.SERPER_API_KEY;
+const llmKey    = process.env.LLM_API_KEY;
+const LLM_BASE_URL = process.env.LLM_BASE_URL || 'https://api.openai.com/v1';
+const LLM_MODEL    = process.env.LLM_MODEL    || 'gpt-4o';
 
-function validateEnv() {
-  const missing = [];
-  if (!SERPER_API_KEY) missing.push('SERPER_API_KEY');
-  if (!LLM_API_KEY)    missing.push('LLM_API_KEY');
-  if (missing.length) {
-    console.error(`[FATAL] Missing environment variables: ${missing.join(', ')}`);
-    console.error('Please set them in .env or export them before running.');
+if (!serperKey || !llmKey) {
+    console.error("[FATAL] Missing env keys. Cloud debug values:", { hasSerper: !!serperKey, hasLLM: !!llmKey });
     process.exit(1);
-  }
 }
 
 // ─── Logging ─────────────────────────────────────────────────────────────────
@@ -66,7 +61,7 @@ async function serperSearch(query, num = 10) {
   const res = await fetch('https://google.serper.dev/search', {
     method: 'POST',
     headers: {
-      'X-API-KEY': SERPER_API_KEY,
+      'X-API-KEY': serperKey,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ q: query, num, hl: 'en', gl: 'us' }),
@@ -124,7 +119,7 @@ async function llmChat(systemPrompt, userPrompt, jsonMode = false) {
   const res = await fetch(`${LLM_BASE_URL}/chat/completions`, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${LLM_API_KEY}`,
+      'Authorization': `Bearer ${llmKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
@@ -360,8 +355,6 @@ async function main() {
   log('═══════════════════════════════════════════════════════════');
   log('  AGENT CORE — Autonomous Pipeline v1.0');
   log('═══════════════════════════════════════════════════════════');
-
-  validateEnv();
 
   try {
     // Phase 1: Research
